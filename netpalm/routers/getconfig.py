@@ -6,6 +6,7 @@ from fastapi.encoders import jsonable_encoder
 # load models
 from netpalm.backend.core.models.models import GetConfig
 from netpalm.backend.core.models.napalm import NapalmGetConfig
+from netpalm.backend.core.models.ncclient import NcclientGet
 from netpalm.backend.core.models.ncclient import NcclientGetConfig
 from netpalm.backend.core.models.netmiko import NetmikoGetConfig
 from netpalm.backend.core.models.puresnmp import PureSNMPGetConfig
