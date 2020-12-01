@@ -18,9 +18,6 @@ log = logging.getLogger(__name__)
 router = APIRouter()
 
 
-def _ncclient_get(getcfg: NcclientGet, library: str = None):
-
-
 def _get_config(getcfg: GetConfig, library: str = None):
     req_data = getcfg.dict(exclude_none=True)
     if library is not None:
