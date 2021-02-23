@@ -59,6 +59,26 @@ class NcclientGetArgs(BaseModel):
     render_json: Optional[bool] = False
 
 
+class NcclientHello(BaseModel):
+    connection_args: NcclientConnection
+    queue_strategy: Optional[QueueStrategy] = None
+
+    class Config:
+        schema_extra = {
+            "example": {
+                "library": "ncclient",
+                "connection_args": {
+                    "host": "10.0.2.39",
+                    "username": "admin",
+                    "password": "admin",
+                    "port": 830,
+                    "hostkey_verify": False
+                },
+                "queue_strategy": "pinned"
+            }
+        }
+
+
 class NcclientSetConfig(BaseModel):
     connection_args: NcclientConnection
     args: Optional[NcclientSendConfigArgs] = {}
