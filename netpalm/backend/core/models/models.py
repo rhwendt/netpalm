@@ -135,6 +135,32 @@ class CacheConfig(BaseModel):
         }
 
 
+class Hello(BaseModel):
+    library: LibraryName
+    connection_args: dict
+    webhook: Optional[Webhook] = {}
+    queue_strategy: Optional[QueueStrategy] = None
+    cache: Optional[CacheConfig] = {}
+
+    class Config:
+        schema_extra = {
+            "example": {
+                "library": "netmiko",
+                "connection_args": {
+                    "device_type": "cisco_ios",
+                    "host": "10.0.2.33",
+                    "username": "device_username",
+                    "password": "device_password"
+                },
+                "queue_strategy": "pinned",
+                "cache": {
+                    "enabled": True,
+                    "ttl": 300,
+                    "poison": False
+                }
+            }
+        }
+
 class GetConfig(BaseModel):
     library: LibraryName
     connection_args: dict
