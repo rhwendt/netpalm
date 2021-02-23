@@ -20,6 +20,16 @@ class ncclien:
         except Exception as e:
             write_meta_error(f"{e}")
 
+    @staticmethod
+    def getcapabilities(session=False):
+        try:
+            result = {}
+            response = session.server_capabilities
+            result["capabilities"] = response
+            return result
+        except Exception as e:
+            write_meta_error(f"{e}")
+
     def getmethod(self, session=False, command=False):
         try:
             result = {}

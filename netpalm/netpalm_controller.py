@@ -11,7 +11,7 @@ from starlette.responses import JSONResponse
 from netpalm.backend.core.confload.confload import config
 from netpalm.backend.core.security.get_api_key import get_api_key
 from netpalm.netpalm_worker_common import start_broadcast_listener_process
-from netpalm.routers import getconfig, setconfig, task, template, script, service, util, public, schedule
+from netpalm.routers import getconfig, setconfig, task, template, script, service, util, public, schedule, hello
 
 log = logging.getLogger(__name__)
 
@@ -29,6 +29,7 @@ app.include_router(script.router, dependencies=[Depends(get_api_key)])
 app.include_router(service.router, dependencies=[Depends(get_api_key)])
 app.include_router(util.router, dependencies=[Depends(get_api_key)])
 app.include_router(schedule.router, dependencies=[Depends(get_api_key)])
+app.include_router(hello.router, dependencies=[Depends(get_api_key)])
 app.include_router(public.router)
 
 broadcast_worker_lock = filelock.FileLock("broadcast_worker_lock")
@@ -38,15 +39,16 @@ try:
         log.info(f"Creating broadcast listener because I got the lock!")
         start_broadcast_listener_process()
 except filelock.Timeout:
-    log.info(f"skipping broadcast listener creation because I couldn't get the lock")
+    log.info(
+        f"skipping broadcast listener creation because I couldn't get the lock"
+    )
 
 
 # swaggerui routers
 @app.get("/swaggerfile", tags=["swagger file"], include_in_schema=False)
 async def get_open_api_endpoint():
     response = JSONResponse(
-        get_openapi(title="netpalm", version="0.4", routes=app.routes)
-    )
+        get_openapi(title="netpalm", version="0.4", routes=app.routes))
     return response
 
 
